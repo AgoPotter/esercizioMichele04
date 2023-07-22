@@ -1,0 +1,24 @@
+ASSEGNO MICHELE (Esercizio 04)
+Ambientazione: negozio di strumenti musicali!
+
+1) Input text numerico (importo) + input text testuale (causale)
+2) Il testo deve generare una tabella
+3) Scrivere il totale in automatico (senza pulsante)
+4) Pulsante per ordinare la tabella in ordine alfabetico (causale)
+5) Pulsante per ordinare la tabella in ordine crescente (importo)
+6) Su ogni riga deve esserci un cestino per cancellare la singola riga
+7) Pulsante cestino per cancellare tutta la tabella generata
+8 BONUS) I pulsanti di ordinamento avranno entrambi la classe pulsante: 
+uno .causale l'altro .importo. Stile comue a tutti e due in .pulsante; stile specifico in .pulsante.importo e .pulsante.causale
+
+HELPS:
+- dovrò fare un vettore di json:
+nuovoJSON:
+    [{
+        causale:"basso"
+        importo: 100
+    }]
+- Attenzione: il sort senza nulla ordina a capa sua. Devi indicare la funzione che general l'ordinamento.
+- Il TOTALE scrivolo nella computed ti conviene usare for each.
+- assegna un indice per ogni riga (così usi l'indice per eliminare la specifica riga)
+- 

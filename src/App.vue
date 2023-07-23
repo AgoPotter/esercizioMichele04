@@ -2,47 +2,41 @@
 export default {
   data() {
     return {
-      nuovoJSON:
-        [{
-        causale:"",
-        quantita: 0,
-        importo: 0,
-        }], 
+      importoDigitato: 0,
+      quantitaSelezionata: 1,
+      causaleDigitata: "",
+        nuovoJSON:
+          [{
+            importo: 0,
+            quantita: 0,
+            causale:"",
+          }], 
     }
   },
 
   methods: {
-    aggiungiRiga() {
-        this.array.push(this.strumento);
-      this.strumento="";
+    aggiungiJSON() {
+      if (this.importoDigitato !=='' && this.quantitaSelezionata !=='' && this.causaleDigitata !=='') {
+
+        this.nuovoJSON.push({
+          importo: this.importoDigitato,
+          quantita: this.quantitaSelezionata,
+          causale: this.causaleDigitata,        
+        });
+        this.importoDigitato='';
+        this.quantitaSelezionata='';
+        this.causaleDigitata='';
+        } else {
+
+        alert("Oh oh... sembra che tu abbia dimenticato di completare tutti i campi.");
+      }
     },
-    cancellaStrumento() {
-      this.array.splice(this.indice, 1);
+    rimuoviRiga() {
+      this.nuovoJSON.splice(this.index, 1);
     },
   },
+
   computed: {
-    numeroMassimo () {
-      if (this.arrayMaggioreTre) return "add-button"
-      else return "add-button-red"
-    },
-    arrayMaggioreTre () {
-      return this.array.length<3
-    },
-    arrayPieno () {
-      return this.array.length!=0
-    },
-    arrayMaiuscolo() { 
-      const arrayMaiuscolo = this.array.map(function(pirata) {
-         return pirata.toUpperCase();
-    });
-         return arrayMaiuscolo;
-  } 
-    /* 
-    FUNZIONE FRECCIA (equivalente)
-    arrayMaiuscolo() { 
-      return this.array.map(pirata => pirata.toUpperCase());
-    } 
-    */ 
  },
 }
 </script>
@@ -55,28 +49,37 @@ export default {
     </header>
     <br>
     <div class="input-container">
-      <input type="number" placeholder="Importo" id="importo" />
-      <select type="number" id="quantita" name="quantita">
+      <input v-model="importoDigitato" type="number" placeholder="Importo" id="importo" />
+      <select v-model="quantitaSelezionata" type="number" id="quantita" name="quantita">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
       </select>
-      <input type="text" placeholder="Causale" id="causale" />
-      <button onclick="aggiungiRiga()" id="aggiungi">Aggiungi</button>
+      <input v-model="causaleDigitata" type="text" placeholder="Causale" id="causale" />
+      <button @click="aggiungiJSON()" id="aggiungi">Aggiungi</button>
     </div>
     <div class="table-container">
       <table id="strumenti-table">
         <thead>
           <tr>
-            <th class="causale" onclick="ordinaPerCausale()">Causale</th>
-            <th class="importo" onclick="ordinaPerImporto()">Importo</th>
+            <th class="importo" @click="ordinaPerImporto()">Importo</th>
+            <th class="quantita" @click="ordinaPerQuantita()">Quantita</th>
+            <th class="causale" @click="ordinaPerCausale()">Causale</th> 
             <th></th>
+ 
           </tr>
         </thead>
         <tbody>
-          <!-- Le righe della tabella verranno generate dinamicamente in Vue.js -->
+          <tr v-for="(item, index) in nuovoJSON" :key="index">
+          <td>{{ item.importo }}</td>
+          <td>{{ item.quantita }}</td>
+          <td>{{ item.causale }}</td>
+          <td>
+            <button @click="rimuoviRiga(index)">❌</button>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>

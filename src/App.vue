@@ -5,26 +5,29 @@ export default {
       importoDigitato: 0,
       quantitaSelezionata: 1,
       causaleDigitata: "",
-        nuovoJSON:
-          [{
-            importo: 0,
-            quantita: 0,
-            causale:"",
-          }], 
+        nuovoJSON:[]
+          // [{
+          //   importo: 0,
+          //   quantita: 0,
+          //   causale:"",
+          // }], 
     }
   },
 
   methods: {
     aggiungiJSON() {
-      if (this.importoDigitato !=='' && this.quantitaSelezionata !=='' && this.causaleDigitata !=='') {
+      // if (this.importoDigitato !=='' && this.quantitaSelezionata !=='' && this.causaleDigitata !=='') {
+      if (this.importoDigitato !==0 && this.causaleDigitata !=='') {
 
         this.nuovoJSON.push({
           importo: this.importoDigitato,
           quantita: this.quantitaSelezionata,
           causale: this.causaleDigitata,        
         });
-        this.importoDigitato='';
-        this.quantitaSelezionata='';
+        // this.importoDigitato='';
+        // this.quantitaSelezionata='';
+        this.importoDigitato=0;
+        this.quantitaSelezionata=1;
         this.causaleDigitata='';
         } else {
 
@@ -32,7 +35,8 @@ export default {
       }
     },
     rimuoviRiga(index) {
-      this.nuovoJSON.splice(this.index, 1);
+      this.nuovoJSON.splice(index, 1);
+      // this.nuovoJSON.splice(this.index, 1);
     },
     cancellaTabella() {
       this.nuovoJSON=[]

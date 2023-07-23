@@ -39,11 +39,21 @@ export default {
     },
     ordineImporto() {
       this.nuovoJSON.sort((a, b) => a.importo - b.importo);
+      /*
+      Se invece volessi ordinare numericamente un array e non un JSON:
+      nomeArray.sort((a, b) => a - b);
+      */
     },
     ordineQuantita() {
       this.nuovoJSON.sort((a, b) => a.quantita - b.quantita);
     },
     ordineCausale() {
+            /*
+      Se invece volessi ordinare alfabeticamente un array e non un JSON:
+      nomeArray.sort();
+      Se lo volessi ordinare in modo decrescente:
+      nomeArray.sort((a, b) => b.localeCompare(a));
+      */
       this.nuovoJSON.sort((a, b) => a.causale.localeCompare(b.causale));
     },
   },
@@ -67,6 +77,10 @@ item: Questo parametro rappresenta l'elemento corrente dell'array su cui reduce 
         return this.nuovoJSON.reduce(function(acc, item) {
         return acc + item.importo;
       }, 0);
+      */
+     /*
+     Se volessi calcolare la somma di un array e non di un JSON, la sintassi è questa:
+     const somma = nomeArray.reduce((acc, numero) => acc + numero, 0);
       */
     }
  },

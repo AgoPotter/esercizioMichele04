@@ -44,8 +44,14 @@ export default {
       nomeArray.sort((a, b) => a - b);
       */
     },
+    ordineImportoDEC() {
+      this.nuovoJSON.sort((a, b) => b.importo - a.importo);
+    },
     ordineQuantita() {
       this.nuovoJSON.sort((a, b) => a.quantita - b.quantita);
+    },
+    ordineQuantitaDEC() {
+      this.nuovoJSON.sort((a, b) => b.quantita - a.quantita);
     },
     ordineCausale() {
             /*
@@ -56,6 +62,9 @@ export default {
       */
       this.nuovoJSON.sort((a, b) => a.causale.localeCompare(b.causale));
     },
+    ordineCausaleDEC () {
+      this.nuovoJSON.sort((a, b) => b.causale.localeCompare(a.causale));
+    }
   },
 
   computed: {
@@ -115,7 +124,21 @@ item: Questo parametro rappresenta l'elemento corrente dell'array su cui reduce 
             <th class="causale" @click="ordinaPerCausale()">Causale</th> 
             <th></th>
           </tr>
-          <tr v-if="nuovoJSON.length > 0"><th @click="ordineImporto">🔽</th><th @click="ordineQuantita">🔽</th><th @click="ordineCausale">🔽</th><th></th></tr>
+          <tr v-if="nuovoJSON.length > 0">
+            <th class="frecce">
+              <div @click="ordineImporto">🔽</div>
+              <div @click="ordineImportoDEC">🔼</div>
+            </th>
+            <th class="frecce">
+              <div @click="ordineQuantita">🔽</div>
+              <div @click="ordineQuantitaDEC">🔼</div>
+            </th>
+            <th class="frecce">
+              <div @click="ordineCausale">🔽</div>
+              <div @click="ordineCausaleDEC">🔼</div>
+            </th>
+            <th>
+            </th></tr>
         </thead>
         <tbody v-if="nuovoJSON.length > 0">
           <tr v-for="(item, index) in nuovoJSON" :key="index">
@@ -346,4 +369,8 @@ tr:hover {
   border-radius: 5px;
   height: 50px;
 }
+.frecce {
+    display: column;
+    justify-content: center;
+  }
 </style>

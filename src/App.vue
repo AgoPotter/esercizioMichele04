@@ -37,6 +37,15 @@ export default {
     cancellaTabella() {
       this.nuovoJSON=[]
     },
+    ordineImporto() {
+      this.nuovoJSON.sort((a, b) => a.importo - b.importo);
+    },
+    ordineQuantita() {
+      this.nuovoJSON.sort((a, b) => a.quantita - b.quantita);
+    },
+    ordineCausale() {
+      this.nuovoJSON.sort((a, b) => a.causale.localeCompare(b.causale));
+    },
   },
 
   computed: {
@@ -91,10 +100,10 @@ item: Questo parametro rappresenta l'elemento corrente dell'array su cui reduce 
             <th class="quantita" @click="ordinaPerQuantita()">Quantita</th>
             <th class="causale" @click="ordinaPerCausale()">Causale</th> 
             <th></th>
- 
           </tr>
+          <tr v-if="nuovoJSON.length > 0"><th @click="ordineImporto">🔽</th><th @click="ordineQuantita">🔽</th><th @click="ordineCausale">🔽</th><th></th></tr>
         </thead>
-        <tbody v-if="nuovoJSON.length > 1">
+        <tbody v-if="nuovoJSON.length > 0">
           <tr v-for="(item, index) in nuovoJSON" :key="index">
           <td>{{ item.importo }}</td>
           <td>{{ item.quantita }}</td>

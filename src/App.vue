@@ -1,22 +1,77 @@
-<script setup>
+<script>
+export default {
+  data() {
+    return {
+      nuovoJSON:
+        [{
+        causale:"",
+        quantita: 0,
+        importo: 0,
+        }], 
+    }
+  },
 
+  methods: {
+    aggiungiRiga() {
+        this.array.push(this.strumento);
+      this.strumento="";
+    },
+    cancellaStrumento() {
+      this.array.splice(this.indice, 1);
+    },
+  },
+  computed: {
+    numeroMassimo () {
+      if (this.arrayMaggioreTre) return "add-button"
+      else return "add-button-red"
+    },
+    arrayMaggioreTre () {
+      return this.array.length<3
+    },
+    arrayPieno () {
+      return this.array.length!=0
+    },
+    arrayMaiuscolo() { 
+      const arrayMaiuscolo = this.array.map(function(pirata) {
+         return pirata.toUpperCase();
+    });
+         return arrayMaiuscolo;
+  } 
+    /* 
+    FUNZIONE FRECCIA (equivalente)
+    arrayMaiuscolo() { 
+      return this.array.map(pirata => pirata.toUpperCase());
+    } 
+    */ 
+ },
+}
 </script>
 
 <template>
 <body>
   <div class="container">
-    <h1>Aggiungi Informazioni</h1>
+    <header>    <h1>📯 🎷 🎺 Music Shop 🎙️ 🎸 🥁</h1>
+    <h2>〽️ Gestione contabilità 〽️</h2>
+    </header>
+    <br>
     <div class="input-container">
       <input type="number" placeholder="Importo" id="importo" />
+      <select type="number" id="quantita" name="quantita">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+      </select>
       <input type="text" placeholder="Causale" id="causale" />
-      <button onclick="aggiungiRiga()">Aggiungi</button>
+      <button onclick="aggiungiRiga()" id="aggiungi">Aggiungi</button>
     </div>
     <div class="table-container">
       <table id="strumenti-table">
         <thead>
           <tr>
-            <th class="pulsante causale" onclick="ordinaPerCausale()">Causale</th>
-            <th class="pulsante importo" onclick="ordinaPerImporto()">Importo</th>
+            <th class="causale" onclick="ordinaPerCausale()">Causale</th>
+            <th class="importo" onclick="ordinaPerImporto()">Importo</th>
             <th></th>
           </tr>
         </thead>
@@ -26,37 +81,64 @@
       </table>
     </div>
     <div class="total-container">
-      <p>Totale: <span id="totale">0</span></p>
-      <button onclick="cancellaTabella()">Cancella Tabella</button>
+      <p id="totale"><b>Totale:</b></p>
+      <button onclick="cancellaTabella()" id="cancella">Cancella Tabella</button>
     </div>
   </div>
-
-  <script src="vue.js"></script> <!-- Assicurati di includere Vue.js nel tuo progetto -->
-  <script src="script.js"></script> <!-- Il tuo file JavaScript -->
+  <footer><a href="https://it.freepik.com/vettori-gratuito/illustrazione-del-negozio-di-musica_3910275.htm#query=negozio%20musica%20disegno&position=28&from_view=search&track=ais">Immagine di macrovector</a> su Freepik</footer>
 </body>
 </template>
 
 <style scoped>
 body {
-  background-color: antiquewhite;
+  background-color: rgba(245, 242, 242, 0.5);
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-image: url('sfondo.jpg');
+  background-size: cover; /* Per adattare l'immagine allo schermo */
+  background-position: center; /* Posiziona l'immagine al centro dello schermo */
+  height: 100vh; /* Altezza pari all'intera finestra del browser */
 }
 
 .container {
-  max-width: 800px;
-  margin: 20px auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: rgba(245, 242, 242, 0.3);
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  width: 100%; /* Larghezza pari all'intera finestra del browser */
+  height: 100vh; /* Altezza pari all'intera finestra del browser */
+  padding: 60px; /* Aggiungi padding di 20px ai bordi interni del contenitore */
+  box-sizing: border-box; /* Assicurati che il padding sia incluso nelle dimensioni del contenitore */
+
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 50px;
   text-align: center;
+  color:#1091e7;
+  text-shadow: 2px 2px 5px rgba(200, 200, 200, 0.5);
 }
+
+h2 {
+  font-size: 35px;
+  text-align: center;
+  color:#dce710;
+  text-shadow: 2px 2px 5px rgba(200, 200, 200, 0.5);
+}
+
+#totale {
+  font-size: 30px;
+  color: whitesmoke;
+}
+
+footer, header {
+  background-color: #030837de; /* Sfondo blu scuro */
+  color: #fff; /* Testo bianco */
+  text-align: center; /* Centra il testo */
+  padding: 20px; /* Aggiunge spazio interno al footer */
+  border-radius: 10px; /* Bordi arrotondati */
+}
+
 
 .input-container {
   display: flex;
@@ -66,15 +148,39 @@ h1 {
 }
 
 .input-container input {
+  border: 1px solid #ccc;
+  font-size: 24px; /* Imposta la dimensione del testo a 24px */
+  font-family: 'Nunito', sans-serif; /* Utilizza il font 'Nunito' come esempio (assicurati di averlo importato nell'HTML) */
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   width: 150px;
 }
 
+#aggiungi {
+  width: 150px;
+  height: 50px;
+  font-size: 24px;
+  background-color: #0a8a0e;
+   color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#aggiungi:hover {
+  background-color: #009BFF;
+  color: #fff; /* Puoi anche cambiare il colore del testo all'hover se lo desideri */
+}
+
+#cancella {
+  width: 240px;
+  height: 50px;
+  font-size: 24px;
+}
 .input-container button {
   padding: 10px 20px;
-  background-color: #007BFF;
+  background-color: #059a2a;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -94,7 +200,10 @@ th,
 td {
   padding: 10px;
   text-align: left;
+  font-size: 20px;
   border-bottom: 1px solid #ccc;
+  background-color: #030837de;
+  color: whitesmoke;
 }
 
 th {
@@ -109,7 +218,7 @@ th.pulsante:hover,
 
 th.pulsante.importo:hover,
 .pulsante.importo:hover {
-  background-color: #009BFF;
+  background-color: #07a211;
 }
 
 th.pulsante.causale:hover,
@@ -123,13 +232,28 @@ tr:hover {
 
 .total-container {
   display: flex;
+  background-color: #030837de;
+  color: antiquewhite;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
 }
+.total-container p {
+  transform: translateX(20px); /* Sposta il paragrafo di 20px verso sinistra (verso il centro) */
+}
 
 .total-container button {
-  background-color: #FF0000;
+  transform: translateX(-20px); /* Sposta il pulsante di 20px verso destra (verso il centro) */
+}
+
+.total-container button {
+  background-color: #760505;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -138,6 +262,39 @@ tr:hover {
 }
 
 .total-container button:hover {
-  background-color: #FF2222;
+  background-color: rgba(255, 34, 34, 0.586);
+}
+
+.input-container input {
+  font-size: 24px;
+  font-family: 'Nunito', sans-serif;
+  padding: 10px;
+  border: 2px solid #222; /* Aggiunge un bordo nero spesso di 2px */
+  border-radius: 5px;
+}
+
+.input-container input, 
+.input-container button {
+  font-size: 24px;
+  font-family: 'Nunito', sans-serif;
+  padding: 10px;
+  border: 2px solid #222; /* Aggiunge un bordo nero spesso di 2px */
+  border-radius: 5px;
+}
+
+.input-container #causale {
+  width: 450px; /* Imposta il doppio della larghezza rispetto agli altri input */
+}
+.input-container #importo {
+  width: 250px; /* Imposta il doppio della larghezza rispetto agli altri input */
+}
+.input-container #quantita {
+  width: 80px; /* Imposta il doppio della larghezza rispetto agli altri input */
+  font-size: 24px;
+  font-family: 'Nunito', sans-serif;
+  padding: 10px;
+  border: 2px solid #222; /* Aggiunge un bordo nero spesso di 2px */
+  border-radius: 5px;
+  height: 50px;
 }
 </style>

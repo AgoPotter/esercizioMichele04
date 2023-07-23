@@ -31,12 +31,35 @@ export default {
         alert("Oh oh... sembra che tu abbia dimenticato di completare tutti i campi.");
       }
     },
-    rimuoviRiga() {
+    rimuoviRiga(index) {
       this.nuovoJSON.splice(this.index, 1);
+    },
+    cancellaTabella() {
+      this.nuovoJSON=[]
     },
   },
 
   computed: {
+    totaleImporti() {
+      /* 
+    ACC (accumulatore): Questo parametro rappresenta il valore accumulato durante 
+    le iterazioni dell'array. 
+    Nella prima iterazione, il valore dell'accumulatore è il valore iniziale 
+    specificato come secondo argomento di reduce (nel nostro caso, 0). 
+    Durante le iterazioni successive, l'accumulatore conterrà il valore accumulato finora.
+    REDUCE: reduce è un metodo degli array di JavaScript che viene utilizzato 
+    per eseguire una riduzione di tutti gli elementi dell'array in un singolo valore, 
+    come ad esempio calcolare una somma o ottenere un valore massimo.
+
+item: Questo parametro rappresenta l'elemento corrente dell'array su cui reduce sta iterando. Durante ogni iterazione, la funzione callback viene chiamata con l'elemento corrente e può accedere alle proprietà di quest'ultimo (nel nostro caso, accediamo alla proprietà importo dell'oggetto item).
+      */
+      return this.nuovoJSON.reduce((acc, item) => acc + item.importo, 0);
+      /*
+        return this.nuovoJSON.reduce(function(acc, item) {
+        return acc + item.importo;
+      }, 0);
+      */
+    }
  },
 }
 </script>
@@ -71,7 +94,7 @@ export default {
  
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="nuovoJSON.length > 1">
           <tr v-for="(item, index) in nuovoJSON" :key="index">
           <td>{{ item.importo }}</td>
           <td>{{ item.quantita }}</td>
@@ -84,8 +107,8 @@ export default {
       </table>
     </div>
     <div class="total-container">
-      <p id="totale"><b>Totale:</b></p>
-      <button onclick="cancellaTabella()" id="cancella">Cancella Tabella</button>
+      <p id="totale">Totale: <b>{{ totaleImporti }}</b></p>
+      <button @click="cancellaTabella()" id="cancella">🗑️ tabella</button>
     </div>
   </div>
   <footer><a href="https://it.freepik.com/vettori-gratuito/illustrazione-del-negozio-di-musica_3910275.htm#query=negozio%20musica%20disegno&position=28&from_view=search&track=ais">Immagine di macrovector</a> su Freepik</footer>

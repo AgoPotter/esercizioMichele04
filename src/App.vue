@@ -6,6 +6,7 @@ export default {
       quantitaSelezionata: 1,
       causaleDigitata: "",
         nuovoJSON:[]
+          // ERRORE AGO:
           // [{
           //   importo: 0,
           //   quantita: 0,
@@ -16,6 +17,7 @@ export default {
 
   methods: {
     aggiungiJSON() {
+      // ERRORE AGO:
       // if (this.importoDigitato !=='' && this.quantitaSelezionata !=='' && this.causaleDigitata !=='') {
       if (this.importoDigitato !==0 && this.causaleDigitata !=='') {
 
@@ -85,7 +87,7 @@ export default {
 
 item: Questo parametro rappresenta l'elemento corrente dell'array su cui reduce sta iterando. Durante ogni iterazione, la funzione callback viene chiamata con l'elemento corrente e può accedere alle proprietà di quest'ultimo (nel nostro caso, accediamo alla proprietà importo dell'oggetto item).
       */
-      return this.nuovoJSON.reduce((acc, item) => acc + item.importo, 0);
+      return this.nuovoJSON.reduce((acc, item) => acc + item.importo*item.quantita, 0);
       /*
         return this.nuovoJSON.reduce(function(acc, item) {
         return acc + item.importo;

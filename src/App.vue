@@ -1,4 +1,6 @@
 <script>
+import Riga from "./components/Riga.vue";
+
 export default {
   data() {
     return {
@@ -13,7 +15,7 @@ export default {
           // }], 
     }
   },
-
+  components:{Riga},
   methods: {
     aggiungiJSON() {
       // if (this.importoDigitato !=='' && this.quantitaSelezionata !=='' && this.causaleDigitata !=='') {
@@ -145,14 +147,15 @@ item: Questo parametro rappresenta l'elemento corrente dell'array su cui reduce 
             </th></tr>
         </thead>
         <tbody v-if="nuovoJSON.length > 0">
-          <tr v-for="(item, index) in nuovoJSON" :key="index">
-          <td>{{ item.importo }}</td>
-          <td>{{ item.quantita }}</td>
-          <td>{{ item.causale }}</td>
-          <td>
-            <button @click="rimuoviRiga(index)">❌</button>
-          </td>
-        </tr>
+          <!-- <tr v-for="(item, index) in nuovoJSON" :key="index">
+            <td>{{ item.importo }}</td>
+            <td>{{ item.quantita }}</td>
+            <td>{{ item.causale }}</td>
+            <td>
+              <button @click="rimuoviRiga(index)">❌</button>
+            </td>
+          </tr> -->
+          <Riga v-for="(item, index) in nuovoJSON" :key="item.causale+index" :riga="item" :indice="index" @rimuoviRigaEmesso="rimuoviRiga"/>
         </tbody>
       </table>
     </div>
@@ -165,7 +168,7 @@ item: Questo parametro rappresenta l'elemento corrente dell'array su cui reduce 
 </body>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 body {
   background-color: rgba(245, 242, 242, 0.5);
   font-family: Arial, sans-serif;
@@ -349,29 +352,25 @@ tr:hover {
   border-radius: 5px;
 }
 
-.input-container input, 
-.input-container button {
-  font-size: 24px;
-  font-family: 'Nunito', sans-serif;
-  padding: 10px;
-  border: 2px solid #222; /* Aggiunge un bordo nero spesso di 2px */
-  border-radius: 5px;
-}
-
-.input-container #causale {
-  width: 450px; /* Imposta il doppio della larghezza rispetto agli altri input */
-}
-.input-container #importo {
-  width: 250px; /* Imposta il doppio della larghezza rispetto agli altri input */
-}
-.input-container #quantita {
-  width: 80px; /* Imposta il doppio della larghezza rispetto agli altri input */
-  font-size: 24px;
-  font-family: 'Nunito', sans-serif;
-  padding: 10px;
-  border: 2px solid #222; /* Aggiunge un bordo nero spesso di 2px */
-  border-radius: 5px;
-  height: 50px;
+.input-container{
+  input,button{
+    font-size: 24px;
+    font-family: 'Nunito', sans-serif;
+    padding: 10px;
+    border: 2px solid #222; /* Aggiunge un bordo nero spesso di 2px */
+    border-radius: 5px;
+  }
+  #causale{ width: 450px; }
+  #importo { width: 250px; }
+  #quantita {
+    width: 80px; /* Imposta il doppio della larghezza rispetto agli altri input */
+    font-size: 24px;
+    font-family: 'Nunito', sans-serif;
+    padding: 10px;
+    border: 2px solid #222; /* Aggiunge un bordo nero spesso di 2px */
+    border-radius: 5px;
+    height: 50px;
+  }
 }
 .frecce {
     display: column;
